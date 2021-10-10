@@ -1,0 +1,126 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Grid/grid.gd" type="Script" id=1]
+[ext_resource path="res://Pieces/Piece Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/HUD.gd" type="Script" id=3]
+[ext_resource path="res://Assets/Farmhouse.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://Camera.gd" type="Script" id=5]
+[ext_resource path="res://UI/Instructions.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+outline_size = 1
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+outline_size = 1
+font_data = ExtResource( 4 )
+
+[node name="Game" type="Node2D"]
+
+[node name="grid" type="Node2D" parent="."]
+script = ExtResource( 1 )
+width = 4
+height = 5
+xStart = 96
+yStart = 832
+offset = 128
+background = ExtResource( 2 )
+
+[node name="HUD" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="HUD"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 576.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Score: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="HUD"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 565.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Time: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="HUD"]
+autostart = true
+
+[node name="Instructions" type="Control" parent="HUD"]
+pause_mode = 2
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1200.0
+color = Color( 0, 0, 0, 0.713726 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/Instructions"]
+margin_right = 576.0
+margin_bottom = 1200.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 2
+
+How fast can you score
+1000 points?"
+align = 1
+valign = 1
+autowrap = true
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="countdown" type="Label" parent="HUD/Instructions"]
+margin_top = 155.0
+margin_right = 576.0
+margin_bottom = 1355.0
+custom_fonts/font = SubResource( 3 )
+text = "Starting in"
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CDTimer" type="Timer" parent="HUD/Instructions"]
+autostart = true
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 5 )
+
+[connection signal="timeout" from="HUD/Timer" to="HUD" method="_on_Timer_timeout"]
+[connection signal="timeout" from="HUD/Instructions/CDTimer" to="HUD/Instructions" method="_on_Timer_timeout"]
